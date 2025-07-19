@@ -1,4 +1,3 @@
-// filepath: app/error.tsx
 'use client';
 
 export default function Error({

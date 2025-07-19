@@ -1,5 +1,5 @@
 import postgres from 'postgres';
-import { Post, Comment, CarStats, LatestPost, PostsTable } from './definitions';
+import { CarStats, LatestPost, PostsTable } from './definitions';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -62,5 +62,17 @@ export async function fetchFilteredPosts(
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch posts.');
+  }
+}
+
+export async function fetchCars() {
+  try {
+    const cars = await sql`
+      SELECT id, make, model FROM cars ORDER BY make, model
+    `;
+    return cars;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch car data.');
   }
 }
